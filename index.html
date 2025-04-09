@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramraja Bastakoti - Web Developer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(90deg, #3182ce 0%, #2b6cb0 100%);
+        }
+        
+        .footer-gradient {
+            background: linear-gradient(135deg, #4299e1 0%, #805ad5 100%);
+        }
+        
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Distinct background colors for service cards */
+        .service-card:nth-child(1) {
+            background: #e3f2fd; /* Light Blue */
+        }
+        .service-card:nth-child(1):hover {
+            background: #bbdefb; /* Slightly darker blue on hover */
+        }
+        
+        .service-card:nth-child(2) {
+            background: #e8f5e9; /* Light Green */
+        }
+        .service-card:nth-child(2):hover {
+            background: #c8e6c9; /* Slightly darker green on hover */
+        }
+        
+        .service-card:nth-child(3) {
+            background: #f3e5f5; /* Light Purple */
+        }
+        .service-card:nth-child(3):hover {
+            background: #e1bee7; /* Slightly darker purple on hover */
+        }
+        
+        .service-card:nth-child(4) {
+            background: #fff3e0; /* Light Orange */
+        }
+        .service-card:nth-child(4):hover {
+            background: #ffccbc; /* Slightly darker orange on hover */
+        }
+        
+        .service-card:nth-child(5) {
+            background: #fce4ec; /* Light Pink */
+        }
+        .service-card:nth-child(5):hover {
+            background: #f8bbd0; /* Slightly darker pink on hover */
+        }
+        
+        .service-card:nth-child(6) {
+            background: #e0f7fa; /* Light Cyan */
+        }
+        .service-card:nth-child(6):hover {
+            background: #b2ebf2; /* Slightly darker cyan on hover */
+        }
+        
+        .portfolio-slider {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .active-dot {
+            background-color: #3182ce;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #3182ce;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .stats-item {
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .stats-item:last-child {
+            border-right: none;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-item {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+            
+            .stats-item:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="fixed w-full bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-blue-600">Ramraja Bastakoti</h1>
+                </div>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-8">
+                        <li><a href="#home" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Home</a></li>
+                        <li><a href="#about" class="nav-link text-gray-700 hover:text-blue-600 font-medium">About Us</a></li>
+                        <li><a href="#services" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Services</a></li>
+                        <li><a href="#portfolio" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Portfolio</a></li>
+                        <li><a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden mt-4">
+                <ul class="flex flex-col space-y-3">
+                    <li><a href="#home" class="block text-gray-700 hover:text-blue-600 font-medium">Home</a></li>
+                    <li><a href="#about" class="block text-gray-700 hover:text-blue-600 font-medium">About Us</a></li>
+                    <li><a href="#services" class="block text-gray-700 hover:text-blue-600 font-medium">Services</a></li>
+                    <li><a href="#portfolio" class="block text-gray-700 hover:text-blue-600 font-medium">Portfolio</a></li>
+                    <li><a href="#contact" class="block text-gray-700 hover:text-blue-600 font-medium">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Full Screen) -->
+    <section id="home" class="min-h-screen flex items-center gradient-bg">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left text-white mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Your Vision, Our Expertise</h1>
+                <p class="text-xl mb-8">We create cutting-edge digital solutions that help businesses thrive in the digital world.</p>
+                <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#services" class="bg-white text-blue-600 py-3 px-8 rounded-full font-bold hover:bg-gray-100 transition duration-300 text-center">Our Services</a>
+                    <a href="#contact" class="bg-transparent border-2 border-white text-white py-3 px-8 rounded-full font-bold hover:bg-white hover:text-blue-600 transition duration-300 text-center">Contact Us</a>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <!-- Placeholder for potential image or animation -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap text-center">
+                <div class="stats-item w-full md:w-1/4 p-4">
+                    <h2 class="text-4xl font-bold text-blue-600 mb-2">125+</h2>
+                    <p class="text-gray-600">Projects Completed</p>
+                </div>
+                <div class="stats-item w-full md:w-1/4 p-4">
+                    <h2 class="text-4xl font-bold text-blue-600 mb-2">99%</h2>
+                    <p class="text-gray-600">Client Satisfaction</p>
+                </div>
+                <div class="stats-item w-full md:w-1/4 p-4">
+                    <h2 class="text-4xl font-bold text-blue-600 mb-2">50+</h2>
+                    <p class="text-gray-600">Active Clients</p>
+                </div>
+                <div class="stats-item w-full md:w-1/4 p-4">
+                    <h2 class="text-4xl font-bold text-blue-600 mb-2">7+</h2>
+                    <p class="text-gray-600">Years Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">About Us</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg" alt="About Us" class="w-full max-w-md mx-auto">
+                </div>
+                <div class="md:w-1/2 md:pl-10">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">We Build Digital Experiences</h3>
+                    <p class="text-gray-600 mb-6">Ramraja Bastakoti is a premier web developer based in Pokhara-26, Kaski. I specialize in creating custom digital solutions that help businesses establish a strong online presence and achieve their goals.</p>
+                    <p class="text-gray-600 mb-8">My team of skilled developers, designers, and digital strategists work together to deliver top-notch websites, mobile applications, and comprehensive web services that drive results.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                            <span class="text-gray-700">Expert Team</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                            <span class="text-gray-700">Quality Assurance</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                            <span class="text-gray-700">Timely Delivery</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                            <span class="text-gray-700">Dedicated Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">We offer a comprehensive range of web development services to help your business thrive in the digital landscape.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Domain Registration -->
+                <div class="service-card rounded-lg shadow-lg p-8">
+                    <div class="bg-blue-200 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-globe text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Domain Registration</h3>
+                    <p class="text-gray-600 mb-4">Secure your online identity with our domain registration services. We help you find and register the perfect domain name for your business.</p>
+                    <ul class="text-gray-600">
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Wide TLD selection
+                        </li>
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Domain management
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Privacy protection
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Hosting Provider -->
+                <div class="service-card rounded-lg shadow-lg p-8">
+                    <div class="bg-green-200 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Hosting Provider</h3>
+                    <p class="text-gray-600 mb-4">Get reliable, high-performance hosting solutions for your website. We offer various hosting packages to meet your specific needs.</p>
+                    <ul class="text-gray-600">
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            99.9% uptime guarantee
+                        </li>
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            24/7 technical support
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Regular backups
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Website Development -->
+                <div class="service-card rounded-lg shadow-lg p-8">
+                    <div class="bg-purple-200 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-laptop-code text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Website Development</h3>
+                    <p class="text-gray-600 mb-4">We create custom, responsive websites that are tailored to your business needs and designed to convert visitors into customers.</p>
+                    <ul class="text-gray-600">
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Responsive design
+                        </li>
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            SEO optimization
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Content management
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Mobile App Development -->
+                <div class="service-card rounded-lg shadow-lg p-8">
+                    <div class="bg-orange-200 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Mobile App Development</h3>
+                    <p class="text-gray-600 mb-4">We develop high-quality, user-friendly mobile applications for iOS and Android platforms that engage users and drive business growth.</p>
+                    <ul class="text-gray-600">
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Cross-platform solutions
+                        </li>
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Intuitive UI/UX design
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Ongoing support
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- SSL Certificates -->
+                <div class="service-card rounded-lg shadow-lg p-8">
+                    <div class="bg-pink-200 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">SSL Certificates</h3>
+                    <p class="text-gray-600 mb-4">Secure your website and protect user data with our SSL certificate solutions. Build trust with your visitors and improve your SEO ranking.</p>
+                    <ul class="text-gray-600">
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Data encryption
+                        </li>
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Enhanced security
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Improved Google ranking
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Consultation -->
+                <div class="service-card rounded-lg shadow-lg p-8">
+                    <div class="bg-cyan-200 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-comments text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">IT Consultation</h3>
+                    <p class="text-gray-600 mb-4">Our expert consultants provide strategic guidance to help you make informed decisions about your digital presence and technology investments.</p>
+                    <ul class="text-gray-600">
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Technology roadmapping
+                        </li>
+                        <li class="flex items-center mb-2">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Digital strategy
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Competitive analysis
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Portfolio</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Take a look at some of our recent projects and see how we've helped businesses achieve their digital goals.</p>
+            </div>
+            
+            <div class="portfolio-slider relative mb-8">
+                <div class="slide-container">
+                    <!-- Project 1 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="E-commerce Website" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">E-commerce Website</h3>
+                                <p class="text-gray-600 mb-4">A fully responsive online store with secure payment processing and inventory management.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">HTML5</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">CSS3</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">JavaScript</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">PHP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="Restaurant Booking App" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Restaurant Booking App</h3>
+                                <p class="text-gray-600 mb-4">A mobile app allowing customers to make reservations and order food for delivery.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">React Native</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Node.js</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">MongoDB</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg" alt="Corporate Website" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Corporate Website</h3>
+                                <p class="text-gray-600 mb-4">A professional website for a financial services company with custom CMS integration.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">WordPress</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">PHP</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">MySQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 4 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Health Tracking App" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Health Tracking App</h3>
+                                <p class="text-gray-600 mb-4">A mobile app that helps users track their fitness goals and daily health metrics.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Angular</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Ionic</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Firebase</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 5 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Real Estate Portal" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Real Estate Portal</h3>
+                                <p class="text-gray-600 mb-4">A comprehensive property listing website with advanced search and filtering options.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Node.js</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Express</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">MongoDB</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 6 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Learning Management System" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Learning Management System</h3>
+                                <p class="text-gray-600 mb-4">An online education platform for a university with course management and student tracking.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Vue.js</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Laravel</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">MySQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 7 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Travel Booking Platform" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Travel Booking Platform</h3>
+                                <p class="text-gray-600 mb-4">A comprehensive travel booking site with flight, hotel, and car rental options.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">React</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Node.js</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 8 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="Inventory Management System" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Inventory Management System</h3>
+                                <p class="text-gray-600 mb-4">A custom solution for tracking inventory, orders, and suppliers for a retail business.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">PHP</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">MySQL</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">jQuery</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 9 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-original.svg" alt="NGO Donation Platform" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">NGO Donation Platform</h3>
+                                <p class="text-gray-600 mb-4">A secure online donation platform for a non-profit organization with campaign management.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Django</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Python</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 10 -->
+                    <div class="slide p-4">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" alt="Fitness App" class="w-full h-64 object-contain">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Fitness App</h3>
+                                <p class="text-gray-600 mb-4">A cross-platform mobile application for workout tracking and fitness coaching.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Flutter</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Dart</span>
+                                    <span class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded-full">Firebase</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 hover:bg-gray-100" id="prev-btn">
+                    <i class="fas fa-chevron-left text-blue-600"></i>
+                </button>
+                <button class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 hover:bg-gray-100" id="next-btn">
+                    <i class="fas fa-chevron-right text-blue-600"></i>
+                </button>
+            </div>
+            
+            <!-- Dots -->
+            <div class="flex justify-center" id="dot-container">
+                <span class="dot active-dot" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+                <span class="dot" data-index="5"></span>
+                <span class="dot" data-index="6"></span>
+                <span class="dot" data-index="7"></span>
+                <span class="dot" data-index="8"></span>
+                <span class="dot" data-index="9"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 gradient-bg">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">Ready to Start Your Project?</h2>
+            <p class="text-white text-xl mb-8 max-w-2xl mx-auto">Let's work together to bring your vision to life. Contact us today to discuss your project requirements.</p>
+            <a href="#contact" class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Contact Us</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Have a question or want to discuss a project? Get in touch with us and we'll get back to you as soon as possible.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 md:pr-8 mb-10 md:mb-0">
+                    <form action="#" method="POST" class="bg-gray-50 p-8 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 w-full">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="md:w-1/2 md:pl-8">
+                    <div class="bg-gray-50 p-8 rounded-lg shadow-md h-full">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Get in Touch</h3>
+                        
+                        <div class="flex items-start mb-6">
+                            <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-700 mb-1">Our Location</h4>
+                                <p class="text-gray-600">Pokhara-26, Kaski, Nepal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-6">
+                            <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-700 mb-1">Email Us</h4>
+                                <p class="text-gray-600">bastakotiramraja@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-6">
+                            <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                <i class="fas fa-phone-alt text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-700 mb-1">Call Us</h4>
+                                <p class="text-gray-600">+977 9856020179</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                <i class="fas fa-clock text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-700 mb-1">Working Hours</h4>
+                                <p class="text-gray-600">Saturday - Thursday: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-bold text-gray-700 mb-4">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-700 transition duration-300">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-500 transition duration-300">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="bg-pink-600 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-pink-700 transition duration-300">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-800 transition duration-300">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Google Map -->
+            <div class="mt-12 rounded-lg overflow-hidden shadow-lg">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3515.5042011561655!2d84.0428684!3d28.191716399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995950e6ee4369b%3A0x991388524c421e95!2sPython%20Tech%20Com%20Nepal%20Pvt.%20Ltd.!5e0!3m2!1sen!2sus!4v1649413784365!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-1/4 mb-8 md:mb-0">
+                    <h2 class="text-2xl font-bold mb-6">Ramraja Bastakoti</h2>
+                    <p class="text-gray-200 mb-4">Creating innovative digital solutions that drive business growth and success.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-200 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-200 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-200 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-200 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/4 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-200 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#about" class="text-gray-200 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#services" class="text-gray-200 hover:text-white transition duration-300">Services</a></li>
+                        <li><a href="#portfolio" class="text-gray-200 hover:text-white transition duration-300">Portfolio</a></li>
+                        <li><a href="#contact" class="text-gray-200 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="w-full md:w-1/4 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">Our Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-200 hover:text-white transition duration-300">Domain Registration</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white transition duration-300">Hosting Provider</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white transition duration-300">Website Development</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white transition duration-300">Mobile App Development</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white transition duration-300">SSL Certificates</a></li>
+                    </ul>
+                </div>
+                
+                <div class="w-full md:w-1/4">
+                    <h3 class="text-xl font-bold mb-6">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-blue-300 mr-3"></i>
+                            <span class="text-gray-200">Pokhara-26, Kaski, Nepal</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-blue-300 mr-3"></i>
+                            <span class="text-gray-200">bastakotiramraja@gmail.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-blue-300 mr-3"></i>
+                            <span class="text-gray-200">+977 9856020179</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-blue-300 mr-3"></i>
+                            <span class="text-gray-200">Sat - Thu: 9:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center">
+                <p class="text-gray-200">© 2025 Ramraja Bastakoti. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Portfolio Slider
+        const slideContainer = document.querySelector('.slide-container');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        let currentIndex = 0;
+        const slideWidth = 100; // percentage
+        
+        // Update slider position
+        function updateSlider() {
+            slideContainer.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+            
+            // Update dots
+            dots.forEach(dot => dot.classList.remove('active-dot'));
+            dots[currentIndex].classList.add('active-dot');
+        }
+        
+        // Handle next button click
+        nextBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlider();
+        });
+        
+        // Handle previous button click
+        prevBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateSlider();
+        });
+        
+        // Handle dot clicks
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                currentIndex = parseInt(this.getAttribute('data-index'));
+                updateSlider();
+            });
+        });
+        
+        // Auto slide
+        let slideInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlider();
+        }, 5000);
+        
+        // Pause auto slide on hover
+        slideContainer.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        // Resume auto slide when mouse leaves
+        slideContainer.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlider();
+            }, 5000);
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Form submission (for demo purposes)
+        const contactForm = document.querySelector('form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
