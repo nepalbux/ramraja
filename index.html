@@ -30,6 +30,7 @@
         
         .hero-section {
             height: 100vh;
+            min-height: 600px;
             position: relative;
         }
         
@@ -253,6 +254,116 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             z-index: -1;
         }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .hero-section {
+                height: auto;
+                padding-top: 120px;
+                padding-bottom: 80px;
+            }
+
+            .hero-content {
+                order: 1;
+            }
+
+            .hero-visual {
+                order: 2;
+                margin-top: 60px;
+            }
+
+            .holographic {
+                width: 300px;
+                height: 300px;
+                margin: 0 auto;
+            }
+
+            .floating-cube, .floating-pyramid {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .text-4xl {
+                font-size: 1.875rem;
+            }
+
+            .text-5xl {
+                font-size: 2.25rem;
+            }
+
+            .text-6xl {
+                font-size: 2.5rem;
+            }
+
+            .text-7xl {
+                font-size: 3rem;
+            }
+
+            .holographic {
+                width: 250px;
+                height: 250px;
+            }
+
+            .feature-panel {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .contact-section {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-buttons button {
+                width: 100%;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .holographic {
+                width: 200px;
+                height: 200px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -260,11 +371,11 @@
     <div id="vanta-bg" class="particle-bg"></div>
     
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-black bg-opacity-60 backdrop-filter backdrop-blur-lg border-b border-gray-800">
+    <nav class="fixed w-full z-50 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-bold gradient-text tech-font">RAMRAJA  BASTAKOTI</span>
+                    <span class="text-2xl font-bold gradient-text tech-font">RAMRAJA BASTAKOTI</span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-center space-x-8">
@@ -276,11 +387,31 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <button class="relative overflow-hidden group bg-transparent border-2 border-blue-400 hover:border-purple-500 text-white px-6 py-2 rounded-full font-medium transition-all duration-500">
+                    <button class="hidden md:block relative overflow-hidden group bg-transparent border-2 border-blue-400 hover:border-purple-500 text-white px-6 py-2 rounded-full font-medium transition-all duration-500">
                         <span class="relative z-10">CONTACT ME</span>
                         <span class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-500"></span>
                     </button>
+                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-black bg-opacity-90 backdrop-filter backdrop-blur-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md">Home</a>
+                <a href="#features" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md">Tech</a>
+                <a href="#portfolio" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md">Work</a>
+                <a href="#pricing" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md">Plans</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md">Contact</a>
+                <button class="w-full mt-2 relative overflow-hidden group bg-transparent border-2 border-blue-400 hover:border-purple-500 text-white px-6 py-2 rounded-full font-medium transition-all duration-500">
+                    <span class="relative z-10">CONTACT ME</span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-500"></span>
+                </button>
             </div>
         </div>
     </nav>
@@ -288,7 +419,7 @@
     <!-- Hero Section with 3D Model -->
     <section class="hero-section flex items-center justify-center relative overflow-hidden px-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="text-center lg:text-left">
+            <div class="text-center lg:text-left hero-content">
                 <div class="relative inline-block mb-8">
                     <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-purple-600 rounded-xl blur opacity-75"></div>
                     <span class="relative px-4 py-2 bg-black rounded-lg text-sm font-medium tech-font">
@@ -301,7 +432,7 @@
                 <p class="text-xl text-gray-300 max-w-2xl mb-10">
                     Let me blend cutting-edge technology with immersive design to create experiences that transcend traditional boundaries.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start hero-buttons">
                     <button class="relative overflow-hidden group px-8 py-4 rounded-full font-medium text-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-green-700 transition-all duration-300 transform hover:scale-105">
                         <span class="relative z-10">Call/Whatsapp me</span>
                         <span class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-all duration-500"></span>
@@ -313,7 +444,7 @@
             </div>
             
             <!-- 3D Holographic Display -->
-            <div class="relative flex items-center justify-center h-96 lg:h-auto">
+            <div class="relative flex items-center justify-center h-96 lg:h-auto hero-visual">
                 <div class="absolute w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                     <div class="floating-torus h-full w-full">
                         <!-- Three.js will render here -->
@@ -325,8 +456,8 @@
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="helmet-visor h-3/4 w-3/4 flex items-center justify-center">
                             <div class="text-center p-6">
-                                <h3 class="text-2xl font-bold mb-2 gradient-text tech-font">RAMRAJA BASTAKOTI</h3>
-                                <p class="text-xs text-gray-300">DIGITAL CREATOR</p>
+                                <h3 class="text-2xl text-gyer-300 font-bold mb-2 gradient-text tech-font">RAMRAJA BASTAKOTI</h3>
+                                <p class="text-xs text-grey-500 font-bold mb-3 leading-tight tech-font">Website And Mobile App Developer</p>
                                 <div class="mt-4 h-1 w-16 mx-auto bg-gradient-to-r from-blue-400 to-purple-600"></div>
                             </div>
                         </div>
@@ -335,13 +466,13 @@
                 </div>
                 
                 <!-- Floating 3D Shapes -->
-                <div class="absolute -left-10 top-1/4 w-16 h-16">
+                <div class="absolute -left-10 top-1/4 w-16 h-16 hidden lg:block">
                     <div class="floating-cube h-full w-full">
                         <canvas id="cubeCanvas" class="h-full w-full"></canvas>
                     </div>
                 </div>
                 
-                <div class="absolute -right-10 bottom-1/3 w-20 h-20">
+                <div class="absolute -right-10 bottom-1/3 w-20 h-20 hidden lg:block">
                     <div class="floating-pyramid h-full w-full">
                         <canvas id="pyramidCanvas" class="h-full w-full"></canvas>
                     </div>
@@ -369,7 +500,7 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 feature-grid">
                 <!-- Feature 1 -->
                 <div class="feature-panel holographic p-8 rounded-2xl transition-all duration-700 hover:transform hover:scale-105">
                     <div class="relative">
@@ -378,11 +509,11 @@
                             <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-vr-cardboard text-xl"></i>
                             </div>
-                            <h3 class="text-2xl font-bold gradient-text tech-font">XR Integration</h3>
+                            <h3 class="text-2xl font-bold gradient-text tech-font"> Develop Website</h3>
                         </div>
                     </div>
                     <p class="text-gray-300 mt-6 mb-6">
-                        Seamless mixed reality experiences combining VR, AR, and spatial computing for unparalleled immersion.
+                        I create responsive, Mobile friendly, user-friendly websites tailored to your brand. From design to development and SEO, I offer complete web solutions for startups, businesses, and enterprises. My expert team ensures a strong digital presence that drives results. Let's build your future-ready website together.
                     </p>
                     <div class="relative h-40 mt-6 rounded-xl overflow-hidden">
                         <canvas id="xrCanvas" class="w-full h-full bg-black/30"></canvas>
@@ -400,11 +531,11 @@
                             <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-brain text-xl"></i>
                             </div>
-                            <h3 class="text-2xl font-bold gradient-text tech-font">AI Interaction</h3>
+                            <h3 class="text-2xl font-bold gradient-text tech-font">App Development</h3>
                         </div>
                     </div>
                     <p class="text-gray-300 mt-6 mb-6">
-                        Smart adaptive interfaces powered by machine learning that evolve with user behavior and preferences.
+                        I build high-quality, user-friendly mobile apps tailored to your needs. From concept to launch, I offer complete app development services for startups and businesses. Our expert team ensures smooth performance, great design, and scalability. Let's create your next powerful, future-ready app together.
                     </p>
                     <div class="relative h-40 mt-6 rounded-xl overflow-hidden">
                         <div class="absolute inset-0 flex items-center justify-center">
@@ -473,7 +604,7 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 portfolio-grid">
                 <!-- Project 1 -->
                 <div class="feature-panel holographic rounded-2xl overflow-hidden transition-all duration-700 delay-75 hover:transform hover:scale-105">
                     <div class="relative h-64">
@@ -568,7 +699,7 @@
                     <p class="text-xl text-gray-300 mb-8">
                         My solutions deliver measurable results across all key performance indicators.
                     </p>
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="grid grid-cols-2 gap-6 stats-grid">
                         <div>
                             <div class="text-4xl font-bold gradient-text mb-2 tech-font">300%</div>
                             <p class="text-gray-400">User Engagement</p>
@@ -600,14 +731,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-5xl font-bold mb-4 tech-font">
-                    <span class="gradient-text">Ready to</span> Transform Your Ideas into Reality?
+                    <span class="gradient-text">Ready to Transform Your Ideas into Reality?
                 </h2>
                 <p class="text-xl text-gray-300 max-w-4xl mx-auto">
                     Let's discuss how we can create something extraordinary together.
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 contact-section">
                 <div class="holographic rounded-3xl p-8 md:p-12 relative overflow-hidden">
                     <form class="space-y-6 relative z-10">
                         <div>
@@ -674,7 +805,9 @@
                 <div>
                     <h4 class="text-xl font-bold gradient-text tech-font mb-4">Ramraja Bastakoti</h4>
                     <p class="text-gray-400 mb-6">Pushing the boundaries of digital experience through immersive technology.</p>
-                     <p class="text-gray-300 mb-6">Call or whatsapp me :  +977 9856020179</p>
+
+                    <span class="gradient-text">Call or whatsapp me :  +977 9856020179
+
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
                             <i class="fab fa-twitter"></i>
@@ -693,21 +826,21 @@
                 <div>
                     <h5 class="text-lg font-bold text-white mb-4">Services</h5>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">XR Development</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">AI Integration</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Web3 Solutions</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Immersive Design</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Tech Consulting</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-400 transition-colors duration-300">XR Development</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-400 transition-colors duration-300">AI Integration</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-400 transition-colors duration-300">Web3 Solutions</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-400 transition-colors duration-300">Immersive Design</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-400 transition-colors duration-300">Tech Consulting</a></li>
                     </ul>
                 </div>
                 <div>
                     <h5 class="text-lg font-bold text-white mb-4">My Self</h5>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Case Studies</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Contact</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-500 transition-colors duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-500 transition-colors duration-300">Careers</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-500 transition-colors duration-300">Case Studies</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-500 transition-colors duration-300">Blog</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-500 transition-colors duration-300">Contact</a></li>
                     </ul>
                 </div>
                 <div>
